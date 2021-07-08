@@ -2,3 +2,5 @@
 *.lock.*
 *demo-multi-region*
 .terraform*
+.terraform/
+*tfstate*
