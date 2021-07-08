@@ -1,7 +1,7 @@
 resource "tfe_workspace" "reg1" {
     name = "wrk-reg1"
     organization = var.org
-    auto_apply = false
+    auto_apply = true
     queue_all_runs = false
 
     vcs_repo {
@@ -22,7 +22,7 @@ resource "tfe_variable" "aws_region_1" {
 
 resource "tfe_variable" "common_tags_1" {
     hcl = true
-    key = "common_tags"
+    key = "inst_common_tags"
     value = var.inst_common_tags
     workspace_id = tfe_workspace.reg1.id
     category = "terraform"
@@ -40,6 +40,14 @@ resource "tfe_variable" "inst_name_1" {
 resource "tfe_variable" "inst_size_1" {
     key = "inst_size"
     value = var.inst_size
+    workspace_id = tfe_workspace.reg1.id
+    category = "terraform"
+    description = ""
+}
+
+resource "tfe_variable" "inst_key_name_1" {
+    key = "inst_key_name"
+    value = var.inst_key_name
     workspace_id = tfe_workspace.reg1.id
     category = "terraform"
     description = ""
@@ -97,7 +105,7 @@ resource "tfe_variable" "subnet_prod_1" {
 resource "tfe_workspace" "reg2" {
     name = "wrk-reg2"
     organization = var.org
-    auto_apply = false
+    auto_apply = true
     queue_all_runs = false
 
     vcs_repo {
@@ -112,6 +120,39 @@ resource "tfe_variable" "aws_region_2" {
     value = var.aws_regions[1] 
     category = "terraform"
     workspace_id = tfe_workspace.reg2.id
+    description = ""
+}
+
+resource "tfe_variable" "common_tags_2" {
+    hcl = true
+    key = "inst_common_tags"
+    value = var.inst_common_tags
+    workspace_id = tfe_workspace.reg2.id
+    category = "terraform"
+    description = ""
+}
+
+resource "tfe_variable" "inst_name_2" {
+    key = "inst_name"
+    value = var.inst_name
+    workspace_id = tfe_workspace.reg2.id
+    category = "terraform"
+    description = ""
+}
+
+resource "tfe_variable" "inst_size_2" {
+    key = "inst_size"
+    value = var.inst_size
+    workspace_id = tfe_workspace.reg2.id
+    category = "terraform"
+    description = ""
+}
+
+resource "tfe_variable" "inst_key_name_2" {
+    key = "inst_key_name"
+    value = var.inst_key_name
+    workspace_id = tfe_workspace.reg2.id
+    category = "terraform"
     description = ""
 }
 
@@ -162,4 +203,18 @@ resource "tfe_variable" "subnet_prod_2" {
     category = "terraform"
     workspace_id = tfe_workspace.reg2.id
     description = ""
+}
+
+resource "tfe_policy_set" "test" {
+  name          = "my-policy-set"
+  description   = "A brand new policy set"
+  organization  = var.org
+  workspace_ids = [tfe_workspace.reg1.id, tfe_workspace.reg2.id]
+
+  vcs_repo {
+    identifier         = "wallacepf/sentinel-demo"
+    branch             = "main"
+    ingress_submodules = false
+    oauth_token_id     = var.vcs_oauth_key
+  }
 }

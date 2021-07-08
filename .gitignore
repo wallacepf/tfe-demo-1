@@ -1,3 +1,4 @@
 *.tfvars
 *.lock.*
 *demo-multi-region*
+.terraform*
