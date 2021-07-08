@@ -6,7 +6,7 @@ resource "tfe_workspace" "reg1" {
 
     vcs_repo {
         identifier = "wallacepf/demo-multi-region"
-        branch = "region1"
+        branch = "main"
         oauth_token_id = var.vcs_oauth_key
     }
 
@@ -15,6 +15,31 @@ resource "tfe_workspace" "reg1" {
 resource "tfe_variable" "aws_region_1" {
     key = "aws_region"
     value = var.aws_regions[0] 
+    workspace_id = tfe_workspace.reg1.id
+    category = "terraform"
+    description = ""
+}
+
+resource "tfe_variable" "common_tags_1" {
+    hcl = true
+    key = "common_tags"
+    value = var.inst_common_tags
+    workspace_id = tfe_workspace.reg1.id
+    category = "terraform"
+    description = ""
+}
+
+resource "tfe_variable" "inst_name_1" {
+    key = "inst_name"
+    value = var.inst_name
+    workspace_id = tfe_workspace.reg1.id
+    category = "terraform"
+    description = ""
+}
+
+resource "tfe_variable" "inst_size_1" {
+    key = "inst_size"
+    value = var.inst_size
     workspace_id = tfe_workspace.reg1.id
     category = "terraform"
     description = ""
@@ -77,7 +102,7 @@ resource "tfe_workspace" "reg2" {
 
     vcs_repo {
         identifier = "wallacepf/demo-multi-region"
-        branch = "region2"
+        branch = "main"
         oauth_token_id = var.vcs_oauth_key
     }
 }

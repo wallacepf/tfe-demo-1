@@ -1,8 +1,12 @@
-variable "hostname" {}
+variable "hostname" {
+    default = "app.terraform.io"
+}
 
 variable "token" {}
 
-variable "org" {}
+variable "org" {
+    default = "my-demo-account"
+}
 
 variable "secret" {}
 
@@ -15,6 +19,11 @@ variable "aws_regions" {
 
 variable "vcs_oauth_key" {}
 
-variable "vcs_repo" {}
+variable "vcs_repo" {
+    default = "wallacepf/demo-multi-region"
+}
 
-variable "email" {}
+variable "inst_size" {}
+variable "inst_key_name" {}
+variable "inst_name" {}
+variable "inst_common_tags" {}
