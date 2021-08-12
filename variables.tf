@@ -1,4 +1,4 @@
-variable "token" {}
+variable "tfe_token" {}
 variable "secret" {}
 variable "access_key" {}
 variable "vcs_oauth_key" {}
@@ -9,6 +9,7 @@ variable "inst_common_tags" {}
 
 variable "hostname" {
     default = "app.terraform.io"
+    sensitive = true
 }
 
 variable "org" {

@@ -8,5 +8,5 @@ terraform {
 
 provider "tfe" {
     hostname = var.hostname
-    token = var.token
+    token = var.tfe_token
 }
